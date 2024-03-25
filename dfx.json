@@ -1,0 +1,27 @@
+{
+  "canisters": {
+    "dpr_backend": {
+      "candid": "src/dpr_backend/dpr_backend.did",
+      "package": "dpr_backend",
+      "type": "rust"
+    },
+    "dpr_frontend": {
+      "dependencies": [
+        "dpr_backend"
+      ],
+      "source": [
+        "src/dpr_frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "dpr_frontend"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
