@@ -22,12 +22,12 @@ type Product = record {
     brand: text;
     p_upvotes: nat32;
     p_downvotes: nat32;
-    reviews: map<nat32, Review>;
+    reviews: record{nat32; Review};
 };
 
-type Products = map<nat32, Product>;
-type Users = map<nat32, User>;
-type Reviews = map<nat32, Review>;
+type Products = record{nat32; Product};
+type Users = record{nat32; User};
+type Reviews = record{nat32; Review};
 
 
 
@@ -40,7 +40,7 @@ service : {
     p_downvote: (nat32) -> () update;
     get_product_upvotes: (nat32) -> (nat32) query;
     get_product_downvotes: (nat32) -> (nat32) query;
-    get_product_reviews: (nat32) -> (map<nat32, Review>) query;
+    get_product_reviews: (nat32) -> (record<nat32, Review>) query;
 
     //review functions
     create_review: (nat32, nat32, text) -> (variant { Ok: null; Err: text }) update;
