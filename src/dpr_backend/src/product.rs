@@ -3,6 +3,7 @@ use lib::Product;
 use lib::Products;
 
 // Ürün ekleme fonksiyonu
+#[update]
 fn add_product(img_url: String, title: String, price: String, brand: String, ram: u32) {
     if title.is_empty()
         || img_url.is_empty()
@@ -38,6 +39,7 @@ fn add_product(img_url: String, title: String, price: String, brand: String, ram
 }
 
 // Ürün silme fonksiyonu
+#[update]
 fn delete_product(product_id: u32) -> Result<(), String> {
     if !PRODUCTS.with(|products| products.borrow().contains_key(&product_id)) {
         return Err("Product not found".to_string());

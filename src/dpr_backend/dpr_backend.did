@@ -34,23 +34,23 @@ type Reviews = record{nat32; Review};
 
 service : {
     // product functions
-    add_product: (text, text, text, text, nat32) -> (variant { Ok: null; Err: text }) update;
-    delete_product: (nat32) -> (variant { Ok: null; Err: text }) update;
-    p_upvote: (nat32) -> () update;
-    p_downvote: (nat32) -> () update;
+    add_product: (text, text, text, text, nat32) -> (variant { Ok: null; Err: text });
+    delete_product: (nat32) -> (variant { Ok: null; Err: text });
+    p_upvote: (nat32) -> ();
+    p_downvote: (nat32) -> ();
     get_product_upvotes: (nat32) -> (nat32) query;
     get_product_downvotes: (nat32) -> (nat32) query;
-    get_product_reviews: (nat32) -> (record<nat32, Review>) query;
+    get_product_reviews: (nat32) -> (record{nat32; Review}) query;
 
     //review functions
-    create_review: (nat32, nat32, text) -> (variant { Ok: null; Err: text }) update;
-    r_upvote: (nat32, nat32) -> () update;
-    r_downvote: (nat32, nat32) -> () update;
+    create_review: (nat32, nat32, text) -> (variant { Ok: null; Err: text });
+    r_upvote: (nat32, nat32) -> ();
+    r_downvote: (nat32, nat32) -> ();
     get_review_upvotes: (nat32, nat32) -> (nat32) query;
     get_review_downvotes: (nat32, nat32) -> (nat32) query;
 
     // user functions
-    create_user: (username:text, password: text) -> (Result);
+    create_user: (username:text, password: text) -> (variant { Ok: null; Err: text});
 }
 
  
