@@ -1,3 +1,7 @@
+use ic_cdk::{query, update};
+use lib::User;
+use lib::Users;
+
 #[update]
 fn create_user(username: String, password: String) -> Result<(), String> {
     if username.is_empty() || password.is_empty() {
@@ -24,6 +28,3 @@ fn create_user(username: String, password: String) -> Result<(), String> {
 
     Ok(())
 }
-
-
-ic_cdk::export_candid!();

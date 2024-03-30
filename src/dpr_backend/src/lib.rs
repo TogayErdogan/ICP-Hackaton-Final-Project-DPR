@@ -1,18 +1,17 @@
+use core::cell::RefCell;
 use serde::Deserialize;
 use std::collections::HashMap;
-use core::cell::RefCell;
 
+// Structs
 
-// Structs  
-
-struct User {
+pub struct User {
     user_id: u32,
     username: String,
     password: String,
 }
 
 #[derive(Debug, Deserialize)]
-struct Review {
+pub struct Review {
     review_id: u32,
     text: String,
     user_id: u32,
@@ -20,10 +19,9 @@ struct Review {
     r_downvotes: u32,
 }
 
-
 #[derive(Debug, Deserialize)]
 pub struct Product {
-    product_id : u32,
+    product_id: u32,
     img: String,
     title: String,
     new_price: String,
@@ -35,19 +33,15 @@ pub struct Product {
     reviews: HashMap<u32, Review>,
 }
 
-
 // Types
 
-type Products = HashMap<u32, Product>;
-type Users = HashMap<u32, User>;
-type Reviews = HashMap<u32, Review>;
-
-
+pub type Products = HashMap<u32, Product>;
+pub type Users = HashMap<u32, User>;
+pub type Reviews = HashMap<u32, Review>;
 
 thread_local! {
     pub static PRODUCTS: RefCell<Products> = RefCell::default();
     pub static USERS: RefCell<Users> = RefCell::default();
 }
 
-ic_cdk::export_candid!();
 

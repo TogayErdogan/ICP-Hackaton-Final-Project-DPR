@@ -1,3 +1,7 @@
+use ic_cdk::{query, update};
+use lib::Review;
+use lib::Reviews;
+
 // Ürüne yorum girme fonksiyonu ->Update
 #[update]
 fn create_review(user_id: u32, product_id: u32, review: String) -> Result<(), String> {
@@ -8,7 +12,6 @@ fn create_review(user_id: u32, product_id: u32, review: String) -> Result<(), St
     let product = PRODUCTS.with(|product| product.borrow().get(product_id));
     let review_count = product.reviews.len();
     let review_id: u32 = review_count + 1;
-
 
     let new_review: Reviews<u32, Review> = Review {
         review_id: review_id,
@@ -62,5 +65,3 @@ impl Review {
         return review.r_downvotes;
     }
 }
-
-ic_cdk::export_candid!();

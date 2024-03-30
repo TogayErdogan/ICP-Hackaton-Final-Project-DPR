@@ -1,16 +1,23 @@
+use ic_cdk::{query, update};
+use lib::Product;
+use lib::Products;
+
 // Ürün ekleme fonksiyonu
-fn add_product(img_url : String, title: String, price: String, brand: String, ram: u32) {
-    if title.is_empty() || img_url.is_empty() || price.is_empty() || company.is_empty() || ram.is_empty(){
+fn add_product(img_url: String, title: String, price: String, brand: String, ram: u32) {
+    if title.is_empty()
+        || img_url.is_empty()
+        || price.is_empty()
+        || company.is_empty()
+        || ram.is_empty()
+    {
         return Err(String::from("You must enter all parameters."));
     }
 
-
     let products_length = PRODUCTS.with(|products| products.borrow()).len();
-
 
     let product_id: u32 = products_length + 1;
 
-    let new_product = User {
+    let new_product = Product {
         product_id,
         img: img_url,
         title,
@@ -38,13 +45,10 @@ fn delete_product(product_id: u32) -> Result<(), String> {
 
     PRODUCTS.with(|products| products.borrow_mut().remove(&product_id));
 
-
     update();
 
     Ok(())
 }
-
-
 
 // Upvote eklemek için fonksiyon -> update
 #[update]
@@ -73,7 +77,6 @@ fn p_downvote(product_id: u32) {
 // Get Product Upvotes -> Query
 #[query]
 fn get_product_upvotes(product_id: u32) -> (u32) {
-    
     let product = PRODUCTS.with(|product| product.borrow().get(product_id));
     let p_upvotes: u32 = product.p_upvotes;
     return p_upvotes;
@@ -90,10 +93,8 @@ fn get_product_downvotes(product_id: u32) -> (u32) {
 
 // Get Product Reviews -> Query
 #[query]
-fn get_product_reviews(product_id: u32) -> HashMap<u32,Review> {
+fn get_product_reviews(product_id: u32) -> HashMap<u32, Review> {
     let product = PRODUCTS.with(|product| product.borrow().get(product_id));
-    let reviews : HashMap<u32, Review> = product.reviews;
+    let reviews: HashMap<u32, Review> = product.reviews;
     return reviews;
 }
-
-ic_cdk::export_candid!();

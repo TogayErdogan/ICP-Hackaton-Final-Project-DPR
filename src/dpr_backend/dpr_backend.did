@@ -1,5 +1,56 @@
+type User = record {
+    user_id: nat32;
+    username: text;
+    password: text;
+};
+
+type Review = record {
+    review_id: nat32;
+    text: text;
+    user_id: nat32;
+    r_upvotes: nat32;
+    r_downvotes: nat32;
+};
+
+type Product = record {
+    product_id: nat32;
+    img: text;
+    title: text;
+    new_price: text;
+    company: text;
+    ram: text;
+    brand: text;
+    p_upvotes: nat32;
+    p_downvotes: nat32;
+    reviews: map<nat32, Review>;
+};
+
+type Products = map<nat32, Product>;
+type Users = map<nat32, User>;
+type Reviews = map<nat32, Review>;
+
+
+
+
 service : {
-    "greet": (text) -> (text) query;
+    // product functions
+    add_product: (text, text, text, text, nat32) -> (variant { Ok: null; Err: text }) update;
+    delete_product: (nat32) -> (variant { Ok: null; Err: text }) update;
+    p_upvote: (nat32) -> () update;
+    p_downvote: (nat32) -> () update;
+    get_product_upvotes: (nat32) -> (nat32) query;
+    get_product_downvotes: (nat32) -> (nat32) query;
+    get_product_reviews: (nat32) -> (map<nat32, Review>) query;
+
+    //review functions
+    create_review: (nat32, nat32, text) -> (variant { Ok: null; Err: text }) update;
+    r_upvote: (nat32, nat32) -> () update;
+    r_downvote: (nat32, nat32) -> () update;
+    get_review_upvotes: (nat32, nat32) -> (nat32) query;
+    get_review_downvotes: (nat32, nat32) -> (nat32) query;
+
+    // user functions
+    create_user: (username:text, password: text) -> (Result);
 }
 
  
