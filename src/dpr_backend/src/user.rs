@@ -24,3 +24,6 @@ fn create_user(username: String, password: String) -> Result<(), String> {
 
     Ok(())
 }
+
+
+ic_cdk::export_candid!();

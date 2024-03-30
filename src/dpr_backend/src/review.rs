@@ -29,7 +29,7 @@ impl Review {
     // Review Upvote eklemek için fonksiyon
     #[update]
     fn r_upvote(product_id: u32, review_id: u32) {
-        let product = products.get(product_id);
+        let product = PRODUCTS.with(|product| product.borrow().get(product_id));
         let review = product.reviews.get_mut(review_id);
         review.r_upvotes += 1;
         update();
@@ -38,7 +38,7 @@ impl Review {
     // Review Downvote eklemek için fonksiyon
     #[update]
     fn r_downvote(product_id: u32, review_id: u32) {
-        let product = products.get(product_id);
+        let product = PRODUCTS.with(|product| product.borrow().get(product_id));
         let review = product.reviews.get_mut(review_id);
         review.r_downvotes += 1;
         update();
@@ -48,23 +48,19 @@ impl Review {
 
     #[query]
     fn get_review_upvotes(product_id: u32, review_id: u32) -> (u32) {
-        let product = products.get(&product_id);
+        let product = PRODUCTS.with(|product| product.borrow().get(product_id));
         let review = product.reviews.get(&review_id);
-        match product {
-            Some(product) => product.p_upvotes,
-            None => 0,
-        }
+        return review.r_upvotes;
     }
 
     // Get Review Downvotes -> Query
 
     #[query]
     fn get_review_downvotes(product_id: u32, review_id: u32) -> (u32) {
-        let product = products.get(&product_id);
+        let product = PRODUCTS.with(|product| product.borrow().get(product_id));
         let review = product.reviews.get(&review_id);
-        match product {
-            Some(product) => product.p_upvotes,
-            None => 0,
-        }
+        return review.r_downvotes;
     }
 }
+
+ic_cdk::export_candid!();

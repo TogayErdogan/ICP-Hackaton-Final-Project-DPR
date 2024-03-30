@@ -26,8 +26,6 @@ pub struct Product {
     product_id : u32,
     img: String,
     title: String,
-    upvotes: u32,
-    downvotes: u32,
     new_price: String,
     company: String,
     ram: String,
@@ -50,4 +48,6 @@ thread_local! {
     pub static PRODUCTS: RefCell<Products> = RefCell::default();
     pub static USERS: RefCell<Users> = RefCell::default();
 }
+
+ic_cdk::export_candid!();
 

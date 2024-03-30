@@ -1,6 +1,50 @@
 // Ürün ekleme fonksiyonu
+fn add_product(img_url : String, title: String, price: String, brand: String, ram: u32) {
+    if title.is_empty() || img_url.is_empty() || price.is_empty() || company.is_empty() || ram.is_empty(){
+        return Err(String::from("You must enter all parameters."));
+    }
+
+
+    let products_length = PRODUCTS.with(|products| products.borrow()).len();
+
+
+    let product_id: u32 = products_length + 1;
+
+    let new_product = User {
+        product_id,
+        img: img_url,
+        title,
+        p_upvotes: 0,
+        p_downvotes: 0,
+        new_price: price,
+        company: 0,
+        brand,
+        ram,
+        reviews,
+    };
+
+    PRODUCTS.with(product_id, new_product);
+
+    update();
+
+    Ok(())
+}
 
 // Ürün silme fonksiyonu
+fn delete_product(product_id: u32) -> Result<(), String> {
+    if !PRODUCTS.with(|products| products.borrow().contains_key(&product_id)) {
+        return Err("Product not found".to_string());
+    }
+
+    PRODUCTS.with(|products| products.borrow_mut().remove(&product_id));
+
+
+    update();
+
+    Ok(())
+}
+
+
 
 // Upvote eklemek için fonksiyon -> update
 #[update]
@@ -51,3 +95,5 @@ fn get_product_reviews(product_id: u32) -> HashMap<u32,Review> {
     let reviews : HashMap<u32, Review> = product.reviews;
     return reviews;
 }
+
+ic_cdk::export_candid!();
