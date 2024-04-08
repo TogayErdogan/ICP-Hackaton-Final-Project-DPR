@@ -4,7 +4,7 @@ use lib::Products;
 
 // Ürün ekleme fonksiyonu
 #[update]
-fn add_product(img_url: String, title: String, price: String, brand: String, ram: u32) {
+fn add_product(img_url: String, title: String, price: String, brand: String, ram: u32) -> Result<(), String> {
     if title.is_empty()
         || img_url.is_empty()
         || price.is_empty()
